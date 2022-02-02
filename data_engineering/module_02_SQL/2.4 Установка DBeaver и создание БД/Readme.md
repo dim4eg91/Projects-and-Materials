@@ -9,5 +9,7 @@
 * Логическая модель данных
 * Физическая модель данных
 
+![img](https://github.com/dim4eg91/Projects-and-Materials/blob/main/data_engineering/module_02_SQL/2.4%20Установка%20DBeaver%20и%20создание%20БД/Концептуальная%20модель.jpg)
+
 Используя Forward Engineering, были получены DDL таблиц для схемы dwh.
 Перенос данных stg to dwh был успешно выполнен.
