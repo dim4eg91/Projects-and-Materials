@@ -1,23 +1,24 @@
-# Модели данных
+### Модели данных
 
-За основной источник данных взят файл Sample - Superstore.xls
-Создана схема stg для источника данных, а также 3 таблицы.
+В этом уроке:
+1. С помощью сервиса [SqlDBM](https://sqldbm.com/Home/) были разработаны:
+  * Концептуальная модель данных
+  * Логическая модель данных
+  * Физическая модель данных
+2. Используя Forward Engineering, были получены DDL таблиц для схемы dwh и выполнены в DBeaver.
+3. Сделано INSERT INTO SQL, чтобы заполнить Dimensions таблицы и Sales Fact таблицу. Сначала заполнены Dimensions таблицы, где в качестве id сгенерирована последовательность чисел, а зачем Sales Fact таблицу, в которую вставлил id из Dimensions таблиц. 
+4. Перенос данных stg to dwh был успешно выполнен.
 
-С помощью сервиса [SqlDBM](https://sqldbm.com/Home/) были разработаны:
+
 
 * Концептуальная модель данных
 
-![img](https://github.com/dim4eg91/Projects-and-Materials/blob/main/data_engineering/module_02_SQL/2.4%20Установка%20DBeaver%20и%20создание%20БД/Концептуальная%20модель.jpg)
+![img](https://github.com/dim4eg91/Projects-and-Materials/blob/main/data_engineering/module_02_SQL/2.1%20Модели%20Данных/Концептуальная%20модель.jpg)
 
 * Логическая модель данных
 
-![img](https://github.com/dim4eg91/Projects-and-Materials/blob/main/data_engineering/module_02_SQL/2.4%20Установка%20DBeaver%20и%20создание%20БД/Логическая%20модель.jpg)
+![img](https://github.com/dim4eg91/Projects-and-Materials/blob/main/data_engineering/module_02_SQL/2.1%20Модели%20Данных/Логическая%20модель.jpg)
 
 * Физическая модель данных
 
-![img](https://github.com/dim4eg91/Projects-and-Materials/blob/main/data_engineering/module_02_SQL/2.4%20Установка%20DBeaver%20и%20создание%20БД/Физическая%20модель.jpg)
-
-
-
-Используя Forward Engineering, были получены DDL таблиц для схемы dwh.
-Перенос данных stg to dwh был успешно выполнен.
+![img](https://github.com/dim4eg91/Projects-and-Materials/blob/main/data_engineering/module_02_SQL/2.1%20Модели%20Данных/Физическая%20модель.jpg)
