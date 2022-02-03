@@ -14,7 +14,15 @@
 
 
 
-
+ 
+  
+   
+    
+    
+     
+      
+       
+       
 * Концептуальная модель данных
 
 ![img](https://github.com/dim4eg91/Projects-and-Materials/blob/main/data_engineering/module_02_SQL/2.1%20Модели%20Данных/Концептуальная%20модель.jpg)
