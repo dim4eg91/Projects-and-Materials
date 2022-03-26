@@ -42,22 +42,22 @@ try:
     #     #connection.commit()
     #     print("[INFO] Data was successfully inserted")
 
-    # print count
+    # print data
     with connection.cursor() as cursor:
         cursor.execute(
-            """select count(*) from users;"""
+            """select * from dwh.geography_dim;"""
         )
-        #connection.commit()
-        print("[INFO] Count ready")
-        print(cursor.fetchone())
+
+        print("[INFO] Data ready")
+        result = cursor.fetchall()
 
     # delete table
-    with connection.cursor() as cursor:
-        cursor.execute(
-            """DROP TABLE users;"""
-        )
-        #connection.commit()
-        print("[INFO] Table deleted")
+    # with connection.cursor() as cursor:
+    #     cursor.execute(
+    #         """DROP TABLE users;"""
+    #     )
+    #     #connection.commit()
+    #     print("[INFO] Table deleted")
 
 except Exception as _ex:
     print("[INFO] Error while working with PostgreSQL", _ex)
@@ -65,3 +65,11 @@ finally:
     if connection:
         connection.close()
         print("[INFO] PostgreSQL connection closed")
+
+# Write into file as csv
+
+with open('D:\python_connect_bd\geography_dim.csv', 'w') as f:
+    for row in result:
+        for i in row:
+            f.write(str(i) + ';')
+        f.write('\n')
