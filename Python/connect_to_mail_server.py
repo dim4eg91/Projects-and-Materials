@@ -1,22 +1,21 @@
+# EXTRACT
 # скрипт подключения к почтовому серверу mail.ru
-#
-#
-#
-#
-#
 
+# Импорт библиотек и файлов
 
-import config
 import imaplib
 import email
 from email.header import decode_header
 import base64
-import mail_read_functions as func
+import mail_config
+
+# Параметры для подключения к почтовому серверу
+
+mail_pass = mail_config.mail_pass
+username = mail_config.username
 
 
-
-mail_pass = config.mail_pass
-username = config.username
+# Блок 0 - функции
 
 def parsing_list_unseen_email(unseen_emails: str):
     """
@@ -24,8 +23,7 @@ def parsing_list_unseen_email(unseen_emails: str):
     :param unseen_emails: объект, который содержит непрочитанные письма
     :return: список ID непрочитанных писем
     """
-    # Для отладки функции
-    # s = "b'234 235 236"
+
     lst_id_unseen_emails = []
     simple_emails = []  # простые письма, которые можно обработать
     digit_char = ''
@@ -51,6 +49,8 @@ def parsing_list_unseen_email(unseen_emails: str):
     return lst_id_unseen_emails
 
 
+# Блок 1 - подключение к почтовому серверу и получение списка непрочитанных писем
+
 imap_server = "imap.mail.ru"
 imap = imaplib.IMAP4_SSL(imap_server)
 imap.login(username, mail_pass)
@@ -58,27 +58,23 @@ imap.select("INBOX")  # выбор папки Входящие в почте
 unseen_mails = imap.search(None, 'UNSEEN')  # поиск непрочитанных писем
 unseen_mails_str = str(unseen_mails[1])
 
-# print('Непрочитанные письма: ', unseen_mails_str, '\n')  # показ непрочитанных писем
-
-# print('Непрочитанные письма: ',
-#       func.parsing_list_unseen_email(unseen_mails_str))  # формирование списка непрочитанных писем
-
 print('Непрочитанные письма: ',
       parsing_list_unseen_email(unseen_mails_str))  # формирование списка непрочитанных писем
 
-res, msg = imap.fetch(b'3061', '(RFC822)')  # Для метода search по порядковому номеру письма
-msg = email.message_from_bytes(msg[0][1])
-print('Заголовок письма:\n', decode_header(msg["Subject"])[0][0].decode(), '\n')  # чтение заголовка письма
+# res, msg = imap.fetch(b'3061', '(RFC822)')  # Для метода search по порядковому номеру письма
+# msg = email.message_from_bytes(msg[0][1])
+# print('Заголовок письма:\n', decode_header(msg["Subject"])[0][0].decode(), '\n')  # чтение заголовка письма
+
 # print(type(decode_header(msg["Subject"])[0][0].decode()))
 # s = ''.join(str(x) for x in body)
 # body = base64.b64decode(msg.get_payload()).decode('utf-8')  # тело (содержимое) письма
-print(msg.is_multipart())
 
 
-for part in msg.walk():
-    print(part.get_content_type())
-
-for part in msg.walk():
-    if part.get_content_maintype() == 'text' and part.get_content_subtype() == 'html':
-        print(base64.b64decode(part.get_payload()).decode())
-
+# print(msg.is_multipart())  # проверка письма на вложенность
+#
+# for part in msg.walk():
+#     print(part.get_content_type())
+#
+# for part in msg.walk():
+#     if part.get_content_maintype() == 'text' and part.get_content_subtype() == 'html':
+#         print(base64.b64decode(part.get_payload()).decode())
