@@ -9,7 +9,7 @@ from sqlalchemy import create_engine
 import pandas as pd
 
 import config
-import mail_read_functions as func
+# import mail_read_functions as func
 from config import *
 
 from bs4 import BeautifulSoup
@@ -18,13 +18,13 @@ import re
 # -----------------------------------------------------------------
 # Conn для БД
 #
-connection = psycopg2.connect(
-    database=db_name,
-    user=user,
-    password=password,
-    host=host,
-    port=port
-)
+# connection = psycopg2.connect(
+#     database=db_name,
+#     user=user,
+#     password=password,
+#     host=host,
+#     port=port
+# )
 
 # Подключение к почте
 
