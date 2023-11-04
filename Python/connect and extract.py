@@ -84,7 +84,7 @@ print('Заголовок письма:\n', decode_header(msg["Subject"])[0][0].
 # print(msg.is_multipart())  # проверка письма на вложенность
 
 # пишу в файл тело письма, чтобы далее его распарсить и сделать DataFrame
-with open('D:/Mail_read_files/simple.txt', 'w', encoding='utf-8') as f:
+with open('D:/Mail_read_files/email_body.txt', 'w', encoding='utf-8') as f:
     for part in msg.walk():
         if part.get_content_maintype() == 'text' and part.get_content_subtype() == 'html':
             f.write(base64.b64decode(part.get_payload()).decode())
