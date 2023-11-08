@@ -1,8 +1,3 @@
-# EXTRACT
-# скрипт подключения к почтовому серверу mail.ru
-
-# Импорт библиотек и файлов
-
 import imaplib
 import email
 from email.header import decode_header
@@ -15,8 +10,6 @@ mail_pass = mail_config.mail_pass
 username = mail_config.username
 
 
-# Блок 0 - функции
-
 def parsing_list_unseen_email(unseen_emails: str):
     """
     Функция принимает на вход строку непрочитанных писем и возвращает список ID таких писем
@@ -25,7 +18,6 @@ def parsing_list_unseen_email(unseen_emails: str):
     """
 
     lst_id_unseen_emails = []
-    simple_emails = []  # простые письма, которые можно обработать
     digit_char = ''
     for i in range(len(unseen_emails)):
         if unseen_emails[i].isdigit():
@@ -36,17 +28,6 @@ def parsing_list_unseen_email(unseen_emails: str):
                 digit_char = ''
     lst_id_unseen_emails.append(digit_char)
     lst_id_unseen_emails.pop()
-
-    # for i in range(len(lst_id_unseen_emails)):
-    #     res, msg = imap.fetch(f"b'{i}', '(RFC822)'")  # Для метода search по порядковому номеру письма
-    #     msg = email.message_from_bytes(msg[0][1])
-    #     if not msg.is_multipart():
-    #         simple_emails.append(lst_id_unseen_emails[i])
-    #
-    #
-    #
-    # print('Заголовок письма:\n', decode_header(msg["Subject"])[0][0].decode(), '\n')  # чтение заголовка письма
-
     return lst_id_unseen_emails
 
 
@@ -71,6 +52,24 @@ def parsing_list_unseen_email_to_bytes(unseen_emails: str):
     return lst_id_unseen_emails
 
 
+def extract_multipart(msg):
+    """
+    Функция принимает на вход тело письма и говорит, есть ли вложенность письма
+    :return: Записывает тело письма в файл D:/Mail_read_files/email_body.txt
+    """
+    if msg.is_multipart():
+        with open('D:/Mail_read_files/email_body.txt', 'w', encoding='utf-8') as f:
+            for part in msg.walk():
+                if part.get_content_maintype() == 'text' and part.get_content_subtype() == 'html':
+                    f.write(base64.b64decode(part.get_payload()).decode())
+            print('[INFO] Файл создан')
+    else:
+        body = base64.b64decode(msg.get_payload()).decode('utf-8')  # тело (содержимое) письма
+        with open('D:/Mail_read_files/email_body.txt', 'w', encoding='utf-8') as f:
+            f.write(body)
+            print('[INFO] Файл создан')
+
+
 # Блок 1 - подключение к почтовому серверу и получение списка непрочитанных писем
 
 imap_server = "imap.mail.ru"
@@ -83,33 +82,8 @@ unseen_mails_str = str(unseen_mails[1])
 print('Непрочитанные письма: ',
       parsing_list_unseen_email(unseen_mails_str))  # формирование списка непрочитанных писем
 
-#
-# print('Непрочитанные письма: ',
-#       parsing_list_unseen_email(unseen_mails_str))  # формирование списка непрочитанных писем
-
-# find_first_actual_unseen_email(parsing_list_unseen_email(unseen_mails_str))
-
-res, msg = imap.fetch(b'3061', '(RFC822)')  # Для метода search по порядковому номеру письма
-# print(type(b'3061'))
+res, msg = imap.fetch(b'3069', '(RFC822)')  # Для метода search по порядковому номеру письма
 msg = email.message_from_bytes(msg[0][1])
 print('Заголовок письма:\n', decode_header(msg["Subject"])[0][0].decode(), '\n')  # чтение заголовка письма
 
-# print(type(decode_header(msg["Subject"])[0][0].decode()))
-
-# body = base64.b64decode(msg.get_payload()).decode('utf-8')  # тело (содержимое) письма
-# s = ''.join(str(x) for x in body)
-
-
-print(msg.is_multipart())  # проверка письма на вложенность
-#
-# for part in msg.walk():
-#     print(part.get_content_type())
-#
-for part in msg.walk():
-    if part.get_content_maintype() == 'text' and part.get_content_subtype() == 'html':
-        print(base64.b64decode(part.get_payload()).decode())
-
-
-# пишу в файл тело письма, чтобы далее его распарсить и сделать DataFrame
-# with open('D:/pythonProject/simple.txt', 'w', encoding='utf-8') as f:
-#     f.write(body)
+extract_multipart(msg)
