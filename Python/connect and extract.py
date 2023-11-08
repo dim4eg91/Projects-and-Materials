@@ -82,7 +82,7 @@ unseen_mails_str = str(unseen_mails[1])
 print('Непрочитанные письма: ',
       parsing_list_unseen_email(unseen_mails_str))  # формирование списка непрочитанных писем
 
-res, msg = imap.fetch(b'3061', '(RFC822)')  # Для метода search по порядковому номеру письма
+res, msg = imap.fetch(b'3069', '(RFC822)')  # Для метода search по порядковому номеру письма
 msg = email.message_from_bytes(msg[0][1])
 print('Заголовок письма:\n', decode_header(msg["Subject"])[0][0].decode(), '\n')  # чтение заголовка письма
 
