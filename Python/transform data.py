@@ -82,24 +82,7 @@ st.setdefault('shop_name', shop)
 
 df = pd.DataFrame(st)
 print(df)
-df.to_csv('D:/Mail_read_files/email_body.csv', sep=',', encoding='utf-8')
-
-# настройки подключения БД
-connection = psycopg2.connect(
-    database=mail_config.db_name,
-    user=mail_config.user,
-    password=mail_config.password,
-    host=mail_config.host,
-    port=mail_config.port
-)
-
-
-def write_df_to_postgres_table():
-    engine = create_engine('postgresql://postgres:fhixvlh1@localhost:5432/postgres')
-    if df.to_sql('public.email_body_temp', engine) is True:
-        print('[INFO] Successful write DataFrame to Postgres table')
-    else:
-        print('[INFO] Error write DataFrame to Postgres table')
+df.to_csv('D:/Mail_read_files/email_body.csv', sep=';', encoding='utf-8', index=False, header=False)
 
 
 def join_data_from_sprv():
