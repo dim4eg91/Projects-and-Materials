@@ -1,4 +1,7 @@
 import pandas as pd
+from sqlalchemy import create_engine
+import mail_config
+import psycopg2
 
 st = {}
 product_name = []
@@ -79,7 +82,42 @@ st.setdefault('shop_name', shop)
 
 df = pd.DataFrame(st)
 print(df)
+df.to_csv('D:/Mail_read_files/email_body.csv', sep=',', encoding='utf-8')
 
-# Трансформация - необходимо распарсить поле count_and_price. поле total_price сделать int
-# df['total_price'] = df['total_price'].astype(float)
-# print(df['total_price'].dtype)
+# настройки подключения БД
+connection = psycopg2.connect(
+    database=mail_config.db_name,
+    user=mail_config.user,
+    password=mail_config.password,
+    host=mail_config.host,
+    port=mail_config.port
+)
+
+
+def write_df_to_postgres_table():
+    engine = create_engine('postgresql://postgres:fhixvlh1@localhost:5432/postgres')
+    if df.to_sql('public.email_body_temp', engine) is True:
+        print('[INFO] Successful write DataFrame to Postgres table')
+    else:
+        print('[INFO] Error write DataFrame to Postgres table')
+
+
+def join_data_from_sprv():
+    "Функция для каждого значения DF заполняет его последнюю колонку значениями из справочника sprv"
+
+    def find_key_by_value(spravochnic, value: str):
+        """
+        Функция ищет ключ в словаре по заданному переданному значению.
+        :param spravochnic: Словарь, по которому идет поиск
+        :param value: Значение, для которого нужно вернуть ключ
+        :return: Ключ для переданного значения
+        """
+        for key, val_list in spravochnic.items():
+            if value in val_list:
+                return key
+        return None
+
+    # df['product_category'] = df['product_name'].apply(lambda x: find_key_by_value(func.product_category_table, x))
+
+# join_data_from_sprv()
+# print(df)
