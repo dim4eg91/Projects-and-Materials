@@ -14,8 +14,12 @@ file = open('D:/Mail_read_files/email_body.csv', 'r', encoding='utf-8')
 
 
 def load_data_to_temp_table():
-    gp_cursor.copy_from(file, 'email_body_temp', sep=';')
-    greenplum.commit()
+    answer = input('Точно загрузить новую пачку данных?\nНапишите "да" или "нет"\n\nОтвет: ')
+    if answer == 'да':
+        gp_cursor.copy_from(file, 'email_body_temp', sep=';')
+        greenplum.commit()
+    else:
+        return None
 
 
 load_data_to_temp_table()

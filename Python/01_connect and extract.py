@@ -62,12 +62,12 @@ def extract_multipart(msg):
             for part in msg.walk():
                 if part.get_content_maintype() == 'text' and part.get_content_subtype() == 'html':
                     f.write(base64.b64decode(part.get_payload()).decode())
-            print('[INFO] Файл создан')
+            print('[INFO] Файл email_body.txt создан')
     else:
         body = base64.b64decode(msg.get_payload()).decode('utf-8')  # тело (содержимое) письма
         with open('D:/Mail_read_files/email_body.txt', 'w', encoding='utf-8') as f:
             f.write(body)
-            print('[INFO] Файл создан')
+            print('[INFO] Файл email_body.txt создан')
 
 
 # Блок 1 - подключение к почтовому серверу и получение списка непрочитанных писем
@@ -82,8 +82,8 @@ unseen_mails_str = str(unseen_mails[1])
 print('Непрочитанные письма: ',
       parsing_list_unseen_email(unseen_mails_str))  # формирование списка непрочитанных писем
 
-res, msg = imap.fetch(b'3069', '(RFC822)')  # Для метода search по порядковому номеру письма
+res, msg = imap.fetch(b'3123', '(RFC822)')  # Для метода search по порядковому номеру письма
 msg = email.message_from_bytes(msg[0][1])
-print('Заголовок письма:\n', decode_header(msg["Subject"])[0][0].decode(), '\n')  # чтение заголовка письма
+print('\nЗаголовок письма:\n', decode_header(msg["Subject"])[0][0].decode(), '\n')  # чтение заголовка письма
 
 extract_multipart(msg)
