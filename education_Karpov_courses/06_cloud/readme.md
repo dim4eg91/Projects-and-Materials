@@ -22,4 +22,6 @@
 
 Результатом практики является скриншот VM с правилами firewall.
 
-![Картинка](/01_firewall.jpg)
+![Firewall](https://github.com/dim4eg91/Projects-and-Materials/blob/feature/education_Karpov_courses/06_cloud/01_firewall.jpg)
+
+![Терминал подключения к VM](https://github.com/dim4eg91/Projects-and-Materials/blob/feature/education_Karpov_courses/06_cloud/01_терминал%20подключения%20к%20ВМ.jpg)
