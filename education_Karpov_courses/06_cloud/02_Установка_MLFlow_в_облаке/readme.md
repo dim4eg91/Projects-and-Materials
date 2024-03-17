@@ -10,5 +10,5 @@
 
 Результатом практики является скриншот из UI MLflow, где видно название экспериментов, дату.
 
-![Firewall](https://github.com/dim4eg91/Projects-and-Materials/blob/feature/education_Karpov_courses/02_Установка_MLFlow_в_облаке/img/mlflow.jpg)
+![MLflow](https://github.com/dim4eg91/Projects-and-Materials/blob/feature/education_Karpov_courses/02_Установка_MLFlow_в_облаке/img/mlflow.jpg)
 
