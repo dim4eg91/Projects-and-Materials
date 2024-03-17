@@ -1,7 +1,4 @@
 import pandas as pd
-from sqlalchemy import create_engine
-import mail_config
-import psycopg2
 
 st = {}
 product_name = []
@@ -99,13 +96,3 @@ def join_data_from_sprv():
             if value in val_list:
                 return key
         return None
-
-    # df['product_category'] = df['product_name'].apply(lambda x: find_key_by_value(func.product_category_table, x))
-
-
-# join_data_from_sprv()
-# print(df)
-
-# engine = create_engine('postgresql://postgres:fhixvlh1@localhost:5432/postgres')
-# df.to_sql('email_body_temp2', engine)
-

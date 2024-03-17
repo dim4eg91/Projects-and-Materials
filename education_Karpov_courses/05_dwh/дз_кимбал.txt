@@ -1,0 +1,73 @@
+БД для хранения информации по поездкам такси.
+
+Проектирование по Кимбалу.
+
+Таблица фактов:
+
+1. f_drive - поездки
+
+Атрибуты:
+drive_id - id водителя
+passenger_id - id пассажира
+car_id - id машины
+payment_value - стоимость поездки
+address_from - адрес откуда ехать
+address_to - адрес куда ехать
+time_in_drive - время в поездке
+
+Таблицы измерений:
+
+1. dim_car - таблица машин
+
+Атрибуты:
+car_id - id машины
+gos_number - гос номер
+mark - марка
+model - модель
+
+2. dim_driver - таблица водителей
+
+Атрибуты:
+driver_id - id водителя
+FIO - ФИО водителя
+passport_number - паспорт
+stage - стаж
+count_drive - количество поездок
+gender - пол
+phone - телефон
+address - адрес регистрации
+
+3. dim_passenger - таблица пассажиров
+
+Атрибуты:
+passenger_id - id пассажира
+FIO - ФИО пассажира
+gender - пол
+phone - телефон
+
+4. dim_address- таблица адресов
+
+Атрибуты:
+address_id - id адреса
+town_id - id города
+street_id - id улицы
+house_id - id дома
+
+5. dim_town- таблица городов
+
+Атрибуты:
+town_id - id города
+town_name - название города
+
+6. dim_street- таблица улиц
+
+Атрибуты:
+street_id - id улицы
+street_name - название улицы
+
+7. dim_house- таблица домов
+
+Атрибуты:
+house_id - id дома
+house_number - номер дома
+
